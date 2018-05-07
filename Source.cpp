@@ -4,7 +4,6 @@
 using namespace std;
 
 int main() {
-
 	setlocale(LC_ALL, "Rus");
 	root = NULL;
 	int val, opt;
