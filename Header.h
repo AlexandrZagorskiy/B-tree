@@ -9,10 +9,9 @@ struct btreeNode {
 	int val[MAX + 1], count;
 	btreeNode *link[MAX + 1];
 };
-extern btreeNode *root;
 
 /* создание узла */
-btreeNode * createNode(int val, btreeNode *child);
+btreeNode *createNode(int val, btreeNode *child, btreeNode *root);
 
 /* Вставка значения в определённую позицию */
 void addValToNode(int val, int pos, btreeNode *node, btreeNode *child);
@@ -24,7 +23,7 @@ void splitNode(int val, int *pval, int pos, btreeNode *node, btreeNode *child, b
 int setValueInNode(int val, int *pval, btreeNode *node, btreeNode **child);
 
 /* вставка val в дерево */
-void insertion(int val);
+btreeNode *insertion(int val, btreeNode *root);
 
 /* копирование потомка для занчения, которое нужно удалить */
 void copySuccessor(btreeNode *myNode, int pos);
@@ -48,7 +47,7 @@ void adjustNode(btreeNode *myNode, int pos);
 int delValFromNode(int val, btreeNode *myNode);
 
 /* удаление из дерева */
-void deletion(int val, btreeNode *myNode);
+btreeNode* deletion(int val, btreeNode *myNode, btreeNode *root);
 
 /* поиск данных */
 void searching(int val, int *pos, btreeNode *myNode);

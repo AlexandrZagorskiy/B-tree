@@ -5,10 +5,10 @@
 
 using namespace std;
 
-btreeNode *root;
+
 
 /* создание узла */
-btreeNode * createNode(int val, btreeNode *child) {
+btreeNode *createNode(int val, btreeNode *child, btreeNode *root) {
 	btreeNode *newNode = new btreeNode;
 	newNode->val[1] = val;
 	newNode->count = 1;
@@ -74,8 +74,7 @@ int setValueInNode(int val, int *pval, btreeNode *node, btreeNode **child) {
 		pos = 0;
 	}
 	else {
-		for (pos = node->count;
-			(val < node->val[pos] && pos > 1); pos--);
+		for (pos = node->count;(val < node->val[pos] && pos > 1); pos--);
 		if (val == node->val[pos]) {
 			printf("Данное число уже есть\n");
 			return 0;
@@ -94,13 +93,14 @@ int setValueInNode(int val, int *pval, btreeNode *node, btreeNode **child) {
 }
 
 /* вставка val в дерево */
-void insertion(int val) {
+btreeNode* insertion(int val, btreeNode *root) {
 	int flag, i;
 	btreeNode *child;
 
 	flag = setValueInNode(val, &i, root, &child);
 	if (flag)
-		root = createNode(i, child);
+		root = createNode(i, child, root);
+	return root;
 }
 
 /* копирование потомка для занчения, которое нужно удалить */
@@ -235,8 +235,7 @@ int delValFromNode(int val, btreeNode *myNode) {
 			flag = 0;
 		}
 		else {
-			for (pos = myNode->count;
-				(val < myNode->val[pos] && pos > 1); pos--);
+			for (pos = myNode->count;(val < myNode->val[pos] && pos > 1); pos--);
 			if (val == myNode->val[pos]) {
 				flag = 1;
 			}
@@ -268,11 +267,11 @@ int delValFromNode(int val, btreeNode *myNode) {
 }
 
 /* удаление из дерева */
-void deletion(int val, btreeNode *myNode) {
+btreeNode* deletion(int val, btreeNode *myNode, btreeNode *root) {
 	btreeNode *tmp;
 	if (!delValFromNode(val, myNode)) {
 		printf("Такого числа нет\n");
-		return;
+		return root;
 	}
 	else {
 		if (myNode->count == 0) {
@@ -282,7 +281,7 @@ void deletion(int val, btreeNode *myNode) {
 		}
 	}
 	root = myNode;
-	return;
+	return root;
 }
 
 /* поиск данных */
@@ -295,6 +294,7 @@ void searching(int val, int *pos, btreeNode *myNode) {
 	if (val < myNode->val[1]) {
 		*pos = 0;
 	}
+
 	else {
 		for (*pos = myNode->count;
 			(val < myNode->val[*pos] && *pos > 1); (*pos)--);
@@ -309,7 +309,7 @@ void searching(int val, int *pos, btreeNode *myNode) {
 
 /*  просмотр дерева   */
 void traversal(btreeNode *myNode) {
-	int i;
+	int i; 
 	if (myNode) {
 		for (i = 0; i < myNode->count; i++) {
 			traversal(myNode->link[i]);
@@ -318,4 +318,3 @@ void traversal(btreeNode *myNode) {
 		traversal(myNode->link[i]);
 	}
 }
-

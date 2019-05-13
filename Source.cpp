@@ -1,11 +1,13 @@
+//B-Дерево. Поиск. Вставка. Удаление.
 #include "Header.h"
 #include <iostream>
 
 using namespace std;
 
 int main() {
-	setlocale(LC_ALL, "Rus");
+	btreeNode *root;
 	root = NULL;
+	setlocale(LC_ALL, "Rus");
 	int val, opt;
 	while (true) {
 		cout << "1. Вставка\t2. Удаление\n";
@@ -17,12 +19,12 @@ int main() {
 		case 1:
 			cout << "вставить число: ";
 			cin >> val;
-			insertion(val);
+			root = insertion(val, root); 
 			break;
 		case 2:
 			cout << "удалить число: ";
 			cin >> val;
-			deletion(val, root);
+			root = deletion(val, root, root);
 			break;
 		case 3:
 			cout << "найти число: ";
